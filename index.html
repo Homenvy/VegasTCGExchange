@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VegasTCGExchange</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+}
+
+/* =========================
+   FIXED HEADER
+========================= */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #0a0a0a;
+    border-bottom: 1px solid #2a2a2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    z-index: 999;
+}
+
+.header-logo {
+    position: absolute;
+    left: 14px;
+    width: 42px;
+    height: 42px;
+    background: #333;
+    border-radius: 6px;
+}
+
+.header-title {
+    color: #d4af37;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* MOBILE HEADER MOVES TO BOTTOM */
+@media (max-width: 768px) {
+    .header {
+        top: auto;
+        bottom: 0;
+        border-top: 1px solid #2a2a2a;
+        border-bottom: none;
+    }
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.container {
+    max-width: 1200px;
+    margin: 80px auto 100px auto;
+    padding: 24px 14px;
+}
+
+/* =========================
+   COUNTDOWN
+========================= */
+.countdown-container {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.countdown-title {
+    color: #d4af37;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#countdown {
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   LAYOUT WRAPPER
+========================= */
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+@media (max-width: 900px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+}
+
+/* =========================
+   FORM
+========================= */
+.form-container {
+    flex: 1;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+h1 {
+    text-align: center;
+    color: #d4af37;
+}
+
+input, textarea, select {
+	text-align:center;
+    width: 95%;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    padding: 10px;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    background: #d4af37;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* =========================
+   ACCORDION
+========================= */
+.accordion-container {
+    flex: 1;
+}
+
+.accordion-item {
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    margin-top: 10px;
+    background: #111;
+    overflow: hidden;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 14px;
+    cursor: pointer;
+}
+
+.accordion-header span {
+    color: #d4af37;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #d4af37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    transition: transform 0.3s ease;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 14px;
+    transition: all 0.35s ease;
+    color: #ccc;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 1200px;
+    opacity: 1;
+    padding: 0 14px 14px 14px;
+}
+
+.accordion-item.active .toggle {
+    transform: rotate(45deg);
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-logo"></div>
+    <div class="header-title">VegasTCGExchange</div>
+</div>
+
+<div class="container">
+
+    <!-- COUNTDOWN -->
+    <div class="countdown-container">
+        <div class="countdown-title">Countdown to July 6th, 2026</div>
+        <div id="countdown"></div>
+    </div>
+
+    <div class="content-wrapper">
+
+        <!-- FORM -->
+        <div class="form-container">
+
+            <h1>Vendor Registration</h1>
+
+            <p>Welcome to the Trading Card Expo vendor registration page. Secure your table and showcase your inventory to collectors, enthusiasts, and competitive players. Spaces are limited, so register early to guarantee your spot.</p>
+
+            <h2 style="text-align:center">Event Details</h2>
+            <p>Join us for a premier trading card event featuring vendors from across the region. Whether you specialize in rare collectibles, sealed products, or accessories, this is the perfect venue to grow your business and connect with the community.</p>
+
+            <form id="vendorForm">
+                <input type="text" name="Name" placeholder="Full Name" required>
+                <input type="email" name="Email" placeholder="Email Address" required>
+                <input type="tel" name="Phone" placeholder="Phone Number" required>
+                <input type="text" name="Business" placeholder="Business Name" required>
+                <input type="text" name="Socials" placeholder="Socials (Instagram, etc.)">
+
+                <p style="text-align:center">Please list the top 3 brands of products you will be selling</p>
+                <input type="text" name="Product1" placeholder="Top Product (1)" required>
+                <input type="text" name="Product2" placeholder="Second Product (2)" required>
+                <input type="text" name="Product3" placeholder="Third Product (3)" required>
+
+                <p style="text-align:center">Select Event Days:</p>
+                <select name="EventDays" style="width:100%" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Both Days">Both Days</option>
+                </select>
+
+                <div class="buttons">
+                    <button type="submit">Submit Registration</button>
+                    <button type="reset">Clear</button>
+                </div>
+
+                <p id="status"></p>
+            </form>
+        </div>
+
+        <!-- ACCORDION -->
+        <div class="accordion-container">
+<!-- 1 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Vendor Registration Overview</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		One (1) 6’ Table:
+		$110 rent fee (1-day show)
+		$220 rent fee (2-day show)
+
+		• Table cover
+		• Two (2) Chairs
+		• Display Case for rent is optional
+		• WiFi
+		• Electrical Outlets Accessibility within venue
+
+		Table assignment(s) will be done at least 1 week before event day. Vendors will be notified via IG.
+	</div>
+</div>
+
+<!-- 2 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Vendor Rules & Regulations</span>
+		<div class="toggle">+</div>
+	</div>
+		<div class="accordion-content">
+		• Registered vendors must be 18 years or older and present valid ID at check-in & show their IG page at the check-in table.
+		• Two (2) Vendor ID per table will be given at check-in. Only those with Vendor ID may enter before/after show hours. No exceptions.
+		• Vendors + staff limited to max 2 per table. If a 3rd Vendor ID is needed, notify Sin City Card Show staff.
+		• Children of vendors will receive separate designated Vendor ID.
+		• Advertisement of any sort is prohibited at the vendor table.
+	</div>
+</div>
+
+<!-- 3 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Setup & Breakdown</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		• Table, chairs, & tablecover will be setup prior to vendor arrival.
+		• Vendors are responsible for setting up their own products on the designated setup day and time.
+		• Vendor tables must remain as laid out by Sin City Card Show team. They cannot be rearranged.
+		• Vendors must be fully set up before the event opens and remain intact until it concludes.
+		• Breakdown is not permitted until the event has officially ended unless prior notification is given.
+		• Vendors are only allowed to setup on assigned tables & designated areas.
+		• Additional tables may not be added on the day of the event.
+		• Vendors may bring one small rack per registered table. No added chairs or tables of any size.
+	</div>
+</div>
+
+<!-- 4 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Product Regulations</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		• Vendors may only sell products specified on their registration form.
+		• All items sold must be legal and comply with local, state, and federal laws.
+		• Stolen, counterfeit or unauthorized merchandise is strictly prohibited and will result in immediate expulsion and a ban from future events.
+	</div>
+</div>
+
+<!-- 5 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Conduct & Behavior</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		• Vendors are expected to conduct themselves in a professional and courteous manner at all times.
+		• Harassment, discrimination, violence, or any form of inappropriate behavior will not be tolerated.
+		• Vendors are responsible for maintaining a clean and orderly space. Please leave your area free of trash.
+		• Smoking, vaping, alcohol and all drug substances are prohibited. Vendors caught with prohibited items will be escorted off premises immediately. No exceptions.
+	</div>
+</div>
+
+<!-- 6 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Insurance & Liability</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		• Vendors are responsible for obtaining liability insurance for their booth/designated space and merchandise.
+		• The event organizers, venue host & event affiliates are not liable for any loss, theft, or damage to vendor property.
+		• Personal recording devices are recommended for each vendor space as a deterrent and as evidence if needed.
+	</div>
+</div>
+
+<!-- 7 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Compliance with Event Staff</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		• Vendors must comply with all instructions and requests from event staff.
+		• Failure to adhere to event rules may result in penalties, including removal from the event and/or being banned from future Sin City Card Show events.
+	</div>
+</div>
+
+<!-- 8 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Reselling Tables</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		• Registered vendors are NOT PERMITTED to resell vendor tables unless preapproved by Sin City Card Show with written notice.
+		• All vendors must register via the Vendor Registration Form prior to the event, including anyone splitting a table.
+		• Anyone caught reselling a table will be removed from the event and/or banned from future events.
+		• Any changes to vendor information must be reported to the Sin City Card Show team.
+		• Vendor checks will be conducted throughout the show to ensure a fair marketplace for all.
+	</div>
+</div>
+
+<!-- 9 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Amendments</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		The event organizers reserve the right to amend these rules as necessary for the safety and enjoyment of all participants.
+	</div>
+</div>
+
+<!-- 10 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Agreement to Terms</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		By registering for the event, vendors agree to abide by these rules and regulations.
+		• Participation as a vendor is subject to approval. Sin City Card Show reserves the right to refuse or revoke vendor privileges at any time.
+	</div>
+</div>
+
+<!-- 11 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Payment Information</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		Table selection will be confirmed on a first pay, first receive basis. Table reservations are only guaranteed after full payment is received. A receipt will be emailed — check junk box if not received within 10 minutes.
+	</div>
+</div>
+
+<!-- 12 -->
+<div class="accordion-item">
+	<div class="accordion-header" onclick="toggle(this)">
+		<span>Refund & Cancellation Policy</span>
+		<div class="toggle">+</div>
+	</div>
+	<div class="accordion-content">
+		NO REFUNDS, CREDITS, TRANSFERS, NOR DISCOUNTS WILL BE ISSUED FOR CANCELLATIONS, NO SHOWS, OR EARLY AND/OR REMOVAL FROM THE EVENT FOR ANY REASON.
+
+		• Applications will be reviewed on a first-come, first-served basis.
+		• Vendors may be placed on a waitlist for the current event.
+		• Vendors are welcome to apply for future shows where availability in their category may open.
+	</div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+// EmailJS Integration
+window.addEventListener('load', function() {
+  emailjs.init("b-9HIa88wAjlDtLpM");
+
+  const form = document.getElementById('vendorForm');
+  const status = document.getElementById('status');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    emailjs.sendForm('service_a801qap', 'template_o72wn1w', this)
+	  .then(() => {
+	    status.textContent = "Registration sent successfully!";
+	    form.reset();
+	  }, (error) => {
+	    status.textContent = "Failed to send. Please try again.";
+	    console.error(error);
+	  });
+  });
+});
+
+//Accordian
+function toggle(el) {
+    let item = el.parentElement;
+    document.querySelectorAll('.accordion-item').forEach(i => {
+        if (i !== item) i.classList.remove('active');
+    });
+    item.classList.toggle('active');
+}
+
+// COUNTDOWN
+const targetDate = new Date("July 6, 2026 00:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+    const seconds = Math.floor((diff%(1000*60))/1000);
+
+    document.getElementById("countdown").innerHTML =
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+
+</body>
+</html>
