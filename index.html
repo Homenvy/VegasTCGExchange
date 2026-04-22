@@ -283,7 +283,7 @@ button {
     <!-- COUNTDOWN -->
     <div class="countdown-container">
         <div class="countdown-title">EVENT COUNTDOWN</div>
-		<div class="countdown-subtitle">Vegas TCG Exchange — July 6th, 2026</div>
+		<div class="countdown-subtitle">Vegas TCG Exchange — TBA</div>
 
 		<div class="countdown-timer-grid">
 
@@ -310,7 +310,7 @@ button {
 		</div>
 
 		<div class="countdown-meta">
-			Location: <span>YOUR LOCATION HERE</span>
+			Location: <span>To Be Announced Soon...</span>
 		</div>
     </div>
 
@@ -347,7 +347,7 @@ button {
                 </select>
 
                 <div class="buttons">
-                    <button type="submit">Submit Registration</button>
+                    <button type="submit" disabled>Submit Registration</button>
                     <button type="reset">Clear</button>
                 </div>
 
@@ -564,7 +564,7 @@ function toggle(el) {
 }
 
 // COUNTDOWN
-const targetDate = new Date("July 6, 2026 00:00:00").getTime();
+const targetDate = new Date(""/*"July 6, 2026 00:00:00"*/).getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
