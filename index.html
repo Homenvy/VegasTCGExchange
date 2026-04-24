@@ -8,7 +8,7 @@
 
 <style>
 body {
-    /*margin: 5vw 0 0 0; this may be unnecessary*/
+    /*margin: 5vw 0 0 0;*/
     font-family: Arial, sans-serif;
     background: #0a0a0a;
     color: #fff;
@@ -49,7 +49,9 @@ img.logo{
 }
 
 .header-social {
-
+	position: absolute;
+	right: 6%;
+	top: 25%;
 }
 
 /* MOBILE HEADER MOVES TO BOTTOM */
@@ -78,12 +80,31 @@ img.logo{
 ===========================*/
 .hero {
 	position: relative;
-	height: 90vw;
+	height: 90vh;
 	background-image: url("banner.png");
 	background-size: cover;
-	background-position: center;
 	overflow: hidden;
 	z-index: -1;
+	max-width: 1054px;
+	margin: 0px auto 10vh auto;
+	border-left: 1px solid #d4af37;
+	border-right: 1px solid #d4af37;
+}
+
+
+/* Mobile */
+@media (max-width: 1150px) {
+	.hero {
+		position: relative;
+		height: 90vw;
+		background-image: url("banner.png");
+		background-size: cover;
+		background-position: center;
+		overflow: hidden;
+		z-index: -1;
+		border:none;
+		margin-bottom: 7vh;
+	}
 }
 
 .hero::after {
@@ -234,6 +255,13 @@ a:hover {
     padding: 16px;
 }
 
+.form-container p {
+	text-align: center;
+	gap: 1vw;
+	line-height: 1.4;
+	margin: 0;
+}
+
 h1 {
     text-align: center;
     color: #d4af37;
@@ -249,6 +277,12 @@ input, textarea, select {
     border: 1px solid #333;
     color: #fff;
     border-radius: 8px;
+}
+
+input[type="checkbox"] {
+	width: auto;
+	padding: 0;
+	margin-bottom: 25px;
 }
 
 .buttons {
@@ -341,7 +375,11 @@ button {
 	</div>
     <div class="header-title"></div>
 	
-	<div class="header-social"><!--Instagram Icon / URL to Social Page --></div>
+	<div class="header-social"><!--Instagram Icon / URL to Social Page -->
+			<a href="https://www.instagram.com/vegas.tcg.exchange" target="_blank">
+				<img src="instasocial.png" alt="Instagram Icon" class="instagram">
+			</a>
+	</div>
 </div>
 
 <div class="hero">
@@ -381,7 +419,7 @@ button {
 		</div>
 
 		<div class="countdown-meta">
-			Location: <span>Binion's Gambling Hall - <a href="https://www.google.com/maps?q=128+Fremont+Street,+Las+Vegas,+NV" target="_blank">128 Fremont Street, Las Vegas, NV 89101</a></span>
+			Location: <span><a href="https://www.google.com/maps?q=128+Fremont+Street,+Las+Vegas,+NV" target="_blank">128 Fremont Street, Las Vegas, NV 89101</a> - Longhorn Banquet Room</span>
 		</div>
     </div>
 
@@ -395,7 +433,7 @@ button {
             <p>Welcome to Vegas TCG Exchange's vendor registration page! Secure your table and showcase your inventory to collectors, enthusiasts, and competitive players. Spaces are limited, so register early to guarantee your spot.</p>
 
             <h2 style="text-align:center">Event Details</h2>
-            <p>Join us for a premier trading card event featuring vendors from across the region. Whether you specialize in rare collectibles, sealed products, or accessories, this is the perfect venue to grow your business and connect with the community.</p>
+            <p>Join us for a premier trading card event featuring vendors from across the region. Fridays will have alcohol, which means no kids will be allowed in the event areas on this day. Saturdays kids are welcome, but there will be no alcohol in the event areas. There will be a break out room for casual play, raffles, trades, etc. Unregistered vendors will not be allowed to make sales in any event areas. All areas will be monitored by event staff. There will be raffles every hour!</p>
 
             <form id="vendorForm">
                 <input type="text" name="Name" placeholder="Full Name" required>
@@ -405,24 +443,34 @@ button {
                 <input type="text" name="Socials" placeholder="Socials (Instagram, etc.)">
 
                 <p style="text-align:center">Please list the top 3 brands of products you will be selling</p>
-                <input type="text" name="Product1" placeholder="Top Product (1)" required>
-                <input type="text" name="Product2" placeholder="Second Product (2)" required>
-                <input type="text" name="Product3" placeholder="Third Product (3)" required>
+                <input type="text" name="Product1" placeholder="Top Product (required)" required>
+                <input type="text" name="Product2" placeholder="Second Product" >
+                <input type="text" name="Product3" placeholder="Third Product" >
 
-                <p style="text-align:center">Select Event Days:</p>
+                <p>Select Event Days:</p>
                 <select name="EventDays" style="width:100%" required>
                     <option value="" disabled selected>Select an option</option>
                     <option value="Friday">Friday</option>
                     <option value="Saturday">Saturday</option>
                     <option value="Both Days">Both Days</option>
                 </select>
-
+				
+				<p style="display:inline-flex">
+					<input type="checkbox" name="Agreement" required>
+						I acknowledge/agree that no children will be allowed on Friday nights for the event.
+				</p>
+				
+				<p style="display:inline-flex">
+					<input type="checkbox" name="Sponsorship">
+						I would like to be a sponsor (See Sponsorship for more info).
+				</p>
+			
                 <div class="buttons" >
                     <button type="submit" disabled>Submit Registration</button>
                     <button type="reset">Clear</button>
                 </div>
 
-                <p id="status" style="text-align:center"></p>
+                <p id="status"></p>
             </form>
         </div>
 
@@ -441,7 +489,6 @@ button {
 
 					• Table cover
 					• Two (2) Chairs
-					• Display Case for rent is optional
 					• WiFi
 					• Electrical Outlets Accessibility within venue
 
@@ -456,10 +503,9 @@ button {
 					<div class="toggle">+</div>
 				</div>
 					<div class="accordion-content">
-					• Registered vendors must be 18 years or older and present valid ID at check-in & show their IG page at the check-in table.
+					• Registered vendors must be 18 years or older and present valid ID and confirmation email at check-in.
 					• Two (2) Vendor ID per table will be given at check-in. Only those with Vendor ID may enter before/after show hours. No exceptions.
 					• Vendors + staff limited to max 2 per table. If a 3rd Vendor ID is needed, notify Vegas TCG Exchange staff.
-					• Children of vendors will receive separate designated Vendor ID.
 					• Advertisement of any sort is prohibited at the vendor table.
 				</div>
 			</div>
@@ -489,7 +535,7 @@ button {
 					<div class="toggle">+</div>
 				</div>
 				<div class="accordion-content">
-					• Vendors may only sell products specified on their registration form.
+					• Vendors will be expected to sell products specified on their registration form.
 					• All items sold must be legal and comply with local, state, and federal laws.
 					• Stolen, counterfeit or unauthorized merchandise is strictly prohibited and will result in immediate expulsion and a ban from future events.
 				</div>
@@ -505,7 +551,7 @@ button {
 					• Vendors are expected to conduct themselves in a professional and courteous manner at all times.
 					• Harassment, discrimination, violence, or any form of inappropriate behavior will not be tolerated.
 					• Vendors are responsible for maintaining a clean and orderly space. Please leave your area free of trash.
-					• Smoking, vaping, alcohol and all drug substances are prohibited. Vendors caught with prohibited items will be escorted off premises immediately. No exceptions.
+					• Smoking, vaping and all drug substances are prohibited. Vendors caught with prohibited items will be escorted off premises immediately. No exceptions.
 				</div>
 			</div>
 
@@ -590,11 +636,25 @@ button {
 					<div class="toggle">+</div>
 				</div>
 				<div class="accordion-content">
-					NO REFUNDS, CREDITS, TRANSFERS, NOR DISCOUNTS WILL BE ISSUED FOR CANCELLATIONS, NO SHOWS, OR EARLY AND/OR REMOVAL FROM THE EVENT FOR ANY REASON.
+					NO REFUNDS, CREDITS, TRANSFERS, NOR DISCOUNTS WILL BE ISSUED FOR CANCELLATIONS, NO SHOWS, LEAVING EARLY AND/OR REMOVAL FROM THE EVENT FOR ANY REASON.
 
 					• Applications will be reviewed on a first-come, first-served basis.
 					• Vendors may be placed on a waitlist for the current event.
 					• Vendors are welcome to apply for future shows where availability in their category may open.
+				</div>
+			</div>
+			
+			<!-- 13 -->
+			<div class="accordion-item">
+				<div class="accordion-header" onclick="toggle(this)">
+					<span>Sponsorship</span>
+					<div class="toggle">+</div>
+				</div>
+				<div class="accordion-content">
+					• Sponsors are required to donate a sealed product or graded card for raffles.
+					• All sponsor donations will be advertised who donated them by business name / logo.
+					• We can advertise your tables on screen. Please provide a business logo and any aditional information you'd like to display to VegasTCGExchange@gmail.com
+					• Please note you may reply to your registration email with this information or when we reach out after registration acceptance.
 				</div>
 			</div>
         </div>
