@@ -424,6 +424,39 @@ button {
 		</div>
     </div>
 
+    <!-- NEXT EVENT COUNTDOWN -->
+    <div class="countdown-container">
+        <div class="countdown-title">NEXT EVENT COUNTDOWN</div>
+        <div class="countdown-subtitle">Vegas TCG Exchange — Friday-Saturday September 4th-5th</div>
+
+        <div class="countdown-timer-grid">
+            <div class="countdown-tile">
+                <div class="countdown-num" id="next-days">00</div>
+                <span>DAYS</span>
+            </div>
+
+            <div class="countdown-tile">
+                <div class="countdown-num" id="next-hours">00</div>
+                <span>HOURS</span>
+            </div>
+
+            <div class="countdown-tile">
+                <div class="countdown-num" id="next-minutes">00</div>
+                <span>MINUTES</span>
+            </div>
+
+            <div class="countdown-tile">
+                <div class="countdown-num" id="next-seconds">00</div>
+                <span>SECONDS</span>
+            </div>
+        </div>
+
+        <div class="countdown-meta">
+            Friday: <span>3:00 PM–9:00 PM</span> &nbsp;|&nbsp; Saturday: <span>10:00 AM–4:00 PM</span><br>
+            Location: <span>TBA</span>
+        </div>
+    </div>
+
     <div class="content-wrapper">
 
         <!-- FORM -->
@@ -442,33 +475,43 @@ button {
                 <input type="tel" name="Phone" placeholder="Phone Number" required>
                 <input type="text" name="Business" placeholder="Business Name" required>
                 <input type="text" name="Socials" placeholder="Socials (Instagram, etc.)">
-				<input type="text" name="TableNum" placeholder="How many tables would you like?">
+				<select name="TableNum" id="tableNum" required>
+                    <option value="" selected disabled>Select number of tables</option>
+                    <option value="1">1 table — $250 total</option>
+                    <option value="2">2 tables — $500 total</option>
+                    <option value="3">3 tables — $750 total</option>
+                    <option value="4">4 tables — $1,000 total</option>
+                </select>
 
                 <p style="text-align:center">Please list the top 3 brands of products you will be selling</p>
                 <input type="text" name="Product1" placeholder="Top Product (required)" required>
                 <input type="text" name="Product2" placeholder="Second Product" >
                 <input type="text" name="Product3" placeholder="Third Product" >
 
-                <p>Select Event Days:</p>
-                <select name="EventDays" style="width:100%" required>
-                    <option value="" disabled selected>Select an option</option>
-                    <option value="Friday">Friday</option>
-                    <option value="Saturday">Saturday</option>
-                    <option value="Both Days">Both Days</option>
-                </select>
+                <p><strong>Registration includes both event days:</strong><br>
+                    Friday, September 4th from 3:00 PM–9:00 PM<br>
+                    Saturday, September 5th from 10:00 AM–4:00 PM
+                </p>
+                <input type="hidden" name="EventDays" value="Both Days — September 4th-5th, 2026">
+                <input type="hidden" name="EventSchedule" value="Friday 3:00 PM-9:00 PM; Saturday 10:00 AM-4:00 PM">
+                <input type="hidden" name="EventLocation" value="TBA">
+                <input type="hidden" name="RegistrationID" id="registrationId">
+                <input type="hidden" name="PaymentStatus" value="PENDING PAYMENT">
+                <input type="hidden" name="ExpectedPayment" id="expectedPayment" value="">
+                <input type="hidden" name="SponsorshipStatus" id="sponsorshipStatus" value="No">
 				
 				<p style="display:inline-flex">
-					<input type="checkbox" name="Agreement" required>
+					<input type="checkbox" name="Agreement" value="Accepted" required>
 						I acknowledge/agree that no children will be allowed on Friday nights for the event.
 				</p>
 				
 				<p style="display:inline-flex">
-					<input type="checkbox" name="Sponsorship">
+					<input type="checkbox" name="Sponsorship" id="sponsorshipCheckbox" value="Yes">
 						I would like to be a sponsor (See Sponsorship for more info).
 				</p>
 			
                 <div class="buttons" >
-                    <button type="submit">Submit Registration</button>
+                    <button type="submit" id="submitButton">Submit Registration &amp; Continue to Payment</button>
                     <button type="reset">Clear</button>
                 </div>
 
@@ -486,8 +529,7 @@ button {
 				</div>
 				<div class="accordion-content">
 					One (1) 6’ Table:
-					$110 rent fee (1-day show)
-					$220 rent fee (2-day show)
+					$250 per-table rent fee (Friday and Saturday)
 
 					• Table cover
 					• Two (2) Chairs
@@ -666,24 +708,72 @@ button {
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <script>
-// EmailJS Integration
+// EmailJS + Stripe Payment Link Integration
+// Paste the final Stripe Payment Link between the quotation marks below.
+// Example: const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/your-link";
+const STRIPE_PAYMENT_LINK = "https://buy.stripe.com/dRm8wPcPJfBVa4cfVl7wA04";
+
+function createRegistrationId() {
+  const randomBytes = new Uint8Array(4);
+  crypto.getRandomValues(randomBytes);
+  const randomCode = Array.from(randomBytes, byte =>
+    byte.toString(16).padStart(2, "0")
+  ).join("").toUpperCase();
+
+  return `VTCG-SEP26-${randomCode}`;
+}
+
 window.addEventListener('load', function() {
   emailjs.init("b-9HIa88wAjlDtLpM");
 
   const form = document.getElementById('vendorForm');
   const status = document.getElementById('status');
+  const submitButton = document.getElementById('submitButton');
+  const registrationIdField = document.getElementById('registrationId');
+  const sponsorshipCheckbox = document.getElementById('sponsorshipCheckbox');
+  const sponsorshipStatusField = document.getElementById('sponsorshipStatus');
+  const tableNumField = document.getElementById('tableNum');
+  const expectedPaymentField = document.getElementById('expectedPayment');
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    emailjs.sendForm('service_mjhbsxc', 'template_o72wn1w', this)
-	  .then(() => {
-	    status.textContent = "Registration sent successfully!";
-	    form.reset();
-	  }, (error) => {
-	    status.textContent = "Failed to send. Please try again.";
-	    console.error(error);
-	  });
+    const emailField = form.elements.Email;
+    const registrationId = createRegistrationId();
+    registrationIdField.value = registrationId;
+    sponsorshipStatusField.value = sponsorshipCheckbox.checked ? 'Yes' : 'No';
+
+    const tableCount = Number.parseInt(tableNumField.value, 10);
+    const expectedTotal = tableCount * 250;
+    expectedPaymentField.value = `$250 × ${tableCount} table${tableCount === 1 ? '' : 's'} = $${expectedTotal.toLocaleString('en-US')} total — both days`;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending Registration...";
+    status.textContent = "Please wait while your registration is submitted.";
+
+    emailjs.sendForm('service_mjhbsxc', 'template_o72wn1w', form)
+      .then(() => {
+        if (!STRIPE_PAYMENT_LINK) {
+          status.textContent = `Registration ${registrationId} was sent, but the payment link has not been configured yet.`;
+          submitButton.disabled = false;
+          submitButton.textContent = "Submit Registration & Continue to Payment";
+          return;
+        }
+
+        const paymentUrl = new URL(STRIPE_PAYMENT_LINK);
+        paymentUrl.searchParams.set('prefilled_email', emailField.value);
+        paymentUrl.searchParams.set('client_reference_id', registrationId);
+
+        status.textContent = `Registration ${registrationId} sent. Redirecting to secure payment...`;
+        submitButton.textContent = "Redirecting to Payment...";
+        window.location.assign(paymentUrl.toString());
+      })
+      .catch((error) => {
+        status.textContent = "Failed to send. Your payment page was not opened. Please try again.";
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Registration & Continue to Payment";
+        console.error(error);
+      });
   });
 });
 
@@ -696,7 +786,7 @@ function toggle(el) {
     item.classList.toggle('active');
 }
 
-// COUNTDOWN
+// CURRENT EVENT COUNTDOWN — left unchanged
 const targetDate = new Date("August 7, 2026 00:00:00").getTime();
 
 function updateCountdown() {
@@ -716,8 +806,28 @@ function updateCountdown() {
     document.getElementById("seconds").innerText = String(seconds).padStart(2, "0");
 }
 
+// SEPTEMBER EVENT COUNTDOWN — Friday, September 4, 2026 at 3:00 PM Las Vegas time
+const nextTargetDate = new Date("2026-09-04T15:00:00-07:00").getTime();
+
+function updateNextCountdown() {
+    const now = Date.now();
+    const diff = Math.max(nextTargetDate - now, 0);
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById("next-days").innerText = String(days).padStart(2, "0");
+    document.getElementById("next-hours").innerText = String(hours).padStart(2, "0");
+    document.getElementById("next-minutes").innerText = String(minutes).padStart(2, "0");
+    document.getElementById("next-seconds").innerText = String(seconds).padStart(2, "0");
+}
+
 updateCountdown();
+updateNextCountdown();
 setInterval(updateCountdown, 1000);
+setInterval(updateNextCountdown, 1000);
 </script>
 
 </body>
