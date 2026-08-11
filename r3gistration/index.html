@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="https://www.vegastcgexchange.com/headerlogo.png" property="og:image"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<title>VegasTCGExchange</title>
+<style>
+body {
+    margin: 0 0 0 0;
+    font-family: Arial, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+}
+
+/* =========================
+         HEADER
+========================= */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 2vw;
+    z-index: 999;
+}
+
+.header-logo {
+    position: absolute;
+    left: 3%;
+	top: 25%;
+}
+
+img.logo{
+	height: clamp(40px, 9vh, 80px);
+	width: auto;
+}
+
+.header-title {
+    color: #d4af37;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+.header-social {
+	position: absolute;
+	right: 6%;
+	top: 25%;
+}
+
+/* MOBILE HEADER MOVES TO BOTTOM */
+@media (max-width: 768px) {
+    .header {
+        top: auto;
+        bottom: 5%;
+        border-bottom: none;
+    }
+	
+	img.logo {
+		height: clamp(40px, 11vh, 80px);
+		}
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.container {
+    max-width: 1200px;
+    margin: -14vh auto 13vh auto;
+}
+
+/* =========================
+        Hero / Banner
+===========================*/
+.hero {
+	position: relative;
+	height: 90vh;
+	background-image: url("/banner.png");
+	background-size: cover;
+	overflow: hidden;
+	z-index: -1;
+	max-width: 1054px;
+	margin: 0px auto 10vh auto;
+	border-left: 1px solid #d4af37;
+	border-right: 1px solid #d4af37;
+}
+
+
+/* Mobile */
+@media (max-width: 1150px) {
+	.hero {
+		position: relative;
+		height: 90vw;
+		background-image: url("/banner.png");
+		background-size: cover;
+		background-position: center;
+		overflow: hidden;
+		z-index: -1;
+		border:none;
+		margin-bottom: 7vh;
+	}
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  /* fade from solid image at top → transparent at bottom */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 70%,
+    rgba(10, 10, 10, 1) 100%
+  );
+
+  pointer-events: none;
+}
+
+
+/* =========================
+   COUNTDOWN
+========================= */
+.countdown-container {
+    background: #0a0a0a;
+    border: 1px solid #d4af37;
+    padding: 24px;
+    border-radius: 16px;
+    width: 93%;
+    max-width: none;
+	margin: 2vh auto;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+}
+
+/*MOBILE OVERRIDE */
+@media (max-width: 768px) {
+	.countdown-container {
+		width: 90%;
+		max-width: 768px;
+		padding: 20px;
+		margin-top: 6%;
+	}
+}
+
+@media (max-width: 480px) {
+	.countdown-container {
+		width: 85%;
+		max-width: 480px;
+		padding: 20px;
+		margin-top: 25%;
+	}
+}	
+
+.countdown-title {
+    color: #d4af37;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+
+.countdown-subtitle {
+    margin-top: 8px;
+    font-size: 16px;
+    opacity: 0.85;
+}
+
+/* GRID */
+.countdown-timer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.countdown-tile {
+    background: #111;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 12px;
+    padding: 14px 8px;
+}
+
+.countdown-num {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d4af37;
+}
+
+.countdown-tile span {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #aaa;
+}
+
+.countdown-meta {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #888;
+}
+
+.countdown-meta span {
+    color: #d4af37;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .countdown-timer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* =========================
+   LAYOUT WRAPPER
+========================= */
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+a {
+	color: #d4af37;
+	text-decoration: none;
+}
+	
+a:visited {
+	color: #d48f37;
+}
+	
+a:hover {
+	color: #d3af37;
+}
+
+
+@media (max-width: 900px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+}
+
+/* =========================
+   FORM
+========================= */
+.form-container {
+    flex: 1;
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.form-container p {
+	text-align: center;
+	gap: 1vw;
+	line-height: 1.4;
+	margin: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #d4af37;
+}
+
+input, textarea, select {
+	text-align:center;
+    width: 95%;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    padding: 10px;
+    background: #0a0a0a;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 8px;
+}
+
+input[type="checkbox"] {
+	width: auto;
+	padding: 0;
+	margin-bottom: 25px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    background: #d4af37;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* =========================
+   ACCORDION
+========================= */
+.accordion-container {
+    flex: 1;
+}
+
+.accordion-item {
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    margin-top: 10px;
+    background: #111;
+    overflow: hidden;
+}
+
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 14px;
+    cursor: pointer;
+}
+
+.accordion-header span {
+    color: #d4af37;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.toggle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #d4af37;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    transition: transform 0.3s ease;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    padding: 0 14px;
+    transition: all 0.35s ease;
+    color: #ccc;
+    font-size: 13px;
+    line-height: 1.6;
+    white-space: pre-line;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 1200px;
+    opacity: 1;
+    padding: 0 14px 14px 14px;
+}
+
+.accordion-item.active .toggle {
+    transform: rotate(45deg);
+}
+
+
+/* Post-payment registration page */
+.content-wrapper { display: block; }
+.form-container { max-width: 720px; margin: 0 auto; }
+.registration-back { margin-top: 18px !important; }
+</style>
+<meta content="noindex,nofollow,noarchive" name="robots"/></head>
+<body>
+<!-- HEADER -->
+<div class="header">
+<div class="header-logo">
+<img alt="Site Logo" class="logo" src="/headerlogo.png"/>
+</div>
+<div class="header-title"></div>
+<div class="header-social"><!--Instagram Icon / URL to Social Page -->
+<a href="https://www.instagram.com/vegas.tcg.exchange" target="_blank">
+<img alt="Instagram Icon" class="instagram" src="/instasocial.png"/>
+</a>
+</div>
+</div>
+<div class="hero">
+<div class="hero-content">
+</div>
+</div>
+<div class="container">
+<!-- COUNTDOWN -->
+<div class="countdown-container">
+<div class="countdown-title">EVENT COUNTDOWN</div>
+<div class="countdown-subtitle">Vegas TCG Exchange — Saturday-Sunday September 5th-6th</div>
+<div class="countdown-timer-grid">
+<div class="countdown-tile"><div class="countdown-num" id="days">00</div><span>DAYS</span></div>
+<div class="countdown-tile"><div class="countdown-num" id="hours">00</div><span>HOURS</span></div>
+<div class="countdown-tile"><div class="countdown-num" id="minutes">00</div><span>MINUTES</span></div>
+<div class="countdown-tile"><div class="countdown-num" id="seconds">00</div><span>SECONDS</span></div>
+</div>
+<div class="countdown-meta">
+    Saturday: <span>11:00 AM–5:00 PM</span>  |  Sunday: <span>11:00 AM–5:00 PM</span><br/>
+    Location: <span><a href="https://www.google.com/maps?q=128+Fremont+Street,+Las+Vegas,+NV" target="_blank">128 Fremont Street, Las Vegas, NV 89101</a> - Longhorn Banquet Room</span>
+</div>
+</div>
+<!-- NEXT EVENT COUNTDOWN -->
+<div class="content-wrapper">
+<!-- FORM -->
+<div class="form-container">
+<h1>Complete Vendor Registration</h1>
+<p>Thank you for reserving your table(s). Complete the form below so the Vegas TCG Exchange organizers have your vendor, contact, and product information.</p>
+<h2 style="text-align:center">Event Details</h2>
+<p>Vegas TCG Exchange takes place Saturday, September 5th and Sunday, September 6th, 2026 from 11:00 AM–5:00 PM each day. Location: <a href="https://www.google.com/maps?q=128+Fremont+Street,+Las+Vegas,+NV" target="_blank">128 Fremont Street, Las Vegas, NV 89101</a> - Longhorn Banquet Room.</p>
+<form id="vendorForm">
+<input name="Name" placeholder="Full Name" required="" type="text"/>
+<input name="Email" placeholder="Email Address" required="" type="email"/>
+<input name="Phone" placeholder="Phone Number" required="" type="tel"/>
+<input name="Business" placeholder="Business Name" required="" type="text"/>
+<input name="Socials" placeholder="Socials (Instagram, etc.)" type="text"/>
+<select id="tableNum" name="TableNum" required="">
+<option disabled="" selected="" value="">How many tables did you purchase?</option>
+<option value="1">1 table — $220 paid</option>
+<option value="2">2 tables — $440 paid</option>
+<option value="3">3 tables — $660 paid</option>
+<option value="4">4 tables — $880 paid</option>
+</select><p style="text-align:center; font-size:13px; color:#bbb; margin-top:-4px;">Select the same number of tables you purchased on Stripe.</p>
+<p style="text-align:center">Please list the top 3 brands of products you will be selling</p>
+<input name="Product1" placeholder="Top Product (required)" required="" type="text"/>
+<input name="Product2" placeholder="Second Product" type="text"/>
+<input name="Product3" placeholder="Third Product" type="text"/>
+<p><strong>Registration includes both event days:</strong><br/>Saturday, September 5th from 11:00 AM–5:00 PM<br/>Sunday, September 6th from 11:00 AM–5:00 PM</p>
+<input name="EventDays" type="hidden" value="Both Days — September 5th-6th, 2026"/>
+<input name="EventSchedule" type="hidden" value="Saturday 11:00 AM-5:00 PM; Sunday 11:00 AM-5:00 PM"/>
+<input name="EventLocation" type="hidden" value="128 Fremont Street, Las Vegas, NV 89101 - Longhorn Banquet Room"/>
+<input id="registrationId" name="RegistrationID" type="hidden"/>
+<input name="PaymentStatus" type="hidden" value="POST-PAYMENT REGISTRATION — VERIFY IN STRIPE"/>
+<input id="expectedPayment" name="ExpectedPayment" type="hidden" value=""/>
+<input id="sponsorshipStatus" name="SponsorshipStatus" type="hidden" value="No"/>
+<p style="display:inline-flex"><input name="Agreement" required="" type="checkbox" value="Accepted"/> I acknowledge/agree to the Vendor Rules &amp; Regulations listed on the main event page.</p>
+<p style="display:inline-flex">
+<input id="sponsorshipCheckbox" name="Sponsorship" type="checkbox" value="Yes"/>
+						I would like to be a sponsor (See Sponsorship for more info).
+				</p>
+<div class="buttons">
+<button id="submitButton" type="submit">Submit Registration</button>
+<button type="reset">Clear</button>
+</div>
+<p id="status"></p>
+</form>
+<p class="registration-back"><a href="/">← Back to event details</a></p></div>
+<!-- ACCORDION -->
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+function createRegistrationId() {
+  const randomBytes = new Uint8Array(4);
+  crypto.getRandomValues(randomBytes);
+  const randomCode = Array.from(randomBytes, byte =>
+    byte.toString(16).padStart(2, "0")
+  ).join("").toUpperCase();
+  return `VTCG-SEP26-${randomCode}`;
+}
+
+window.addEventListener('load', function() {
+  emailjs.init("b-9HIa88wAjlDtLpM");
+
+  const form = document.getElementById('vendorForm');
+  const status = document.getElementById('status');
+  const submitButton = document.getElementById('submitButton');
+  const registrationIdField = document.getElementById('registrationId');
+  const sponsorshipCheckbox = document.getElementById('sponsorshipCheckbox');
+  const sponsorshipStatusField = document.getElementById('sponsorshipStatus');
+  const tableNumField = document.getElementById('tableNum');
+  const expectedPaymentField = document.getElementById('expectedPayment');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const registrationId = createRegistrationId();
+    registrationIdField.value = registrationId;
+    sponsorshipStatusField.value = sponsorshipCheckbox.checked ? 'Yes' : 'No';
+
+    const tableCount = Number.parseInt(tableNumField.value, 10);
+    const expectedTotal = tableCount * 220;
+    expectedPaymentField.value = `$220 × ${tableCount} table${tableCount === 1 ? '' : 's'} = $${expectedTotal.toLocaleString('en-US')} total — both days`;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting Registration...";
+    status.textContent = "Please wait while your registration information is sent.";
+
+    emailjs.sendForm('service_mjhbsxc', 'template_o72wn1w', form)
+      .then(() => {
+        status.textContent = `Registration ${registrationId} submitted successfully. Your information has been sent to the event organizers.`;
+        submitButton.textContent = "Registration Submitted";
+        form.querySelectorAll('input, select, button').forEach(el => el.disabled = true);
+      })
+      .catch((error) => {
+        status.textContent = "Failed to send your registration information. Please try again.";
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Registration";
+        console.error(error);
+      });
+  });
+});
+
+// EVENT COUNTDOWN — Saturday, September 5, 2026 at 11:00 AM Las Vegas time
+const targetDate = new Date("2026-09-05T11:00:00-07:00").getTime();
+function updateCountdown() {
+  const diff = Math.max(targetDate - Date.now(), 0);
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  document.getElementById("days").innerText = String(days).padStart(2, "0");
+  document.getElementById("hours").innerText = String(hours).padStart(2, "0");
+  document.getElementById("minutes").innerText = String(minutes).padStart(2, "0");
+  document.getElementById("seconds").innerText = String(seconds).padStart(2, "0");
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
